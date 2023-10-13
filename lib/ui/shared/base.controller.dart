@@ -32,6 +32,8 @@ abstract class BaseController extends AutoDisposeNotifier<ViewState> {
       errorMsg = error?.toString();
       title = title ?? 'Error';
       subtitle = subtitle ?? error?.toString();
+      debugPrint(
+          'An error occurred in controller: ${error.toString()}, $stacktrace');
 
       if (!noPopup) {
         final BuildContext? context = NavigationService.context;

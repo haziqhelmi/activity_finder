@@ -1,3 +1,4 @@
+import 'package:activity_finder/constant/enum/activity_type.enum.dart';
 import 'package:activity_finder/constant/extension/widget.extension.dart';
 import 'package:activity_finder/core/model/activity.model.dart';
 import 'package:activity_finder/ui/shared/theme_style.dart';
@@ -13,6 +14,9 @@ class ActivityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String typeName =
+        ActivityType.values.byName(activity?.type ?? 'none').getName;
+
     return Container(
       padding: EdgeInsets.all(24),
       width: double.infinity,
@@ -44,10 +48,7 @@ class ActivityCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Type', style: ThemeStyle.body2),
-              Text(
-                activity?.type?.getName ?? '-',
-                style: ThemeStyle.body1,
-              )
+              Text(typeName, style: ThemeStyle.body1)
             ],
           ).paddingOnly(bottom: 8),
           Row(

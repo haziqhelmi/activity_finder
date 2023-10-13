@@ -80,7 +80,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
               Text('History',
                   style: ThemeStyle.body1.copyWith(color: Colors.black),
                   overflow: TextOverflow.fade),
-              Text('Total:- 12',
+              Text(
+                  'Total: ${ref.read(homeController.notifier).activities.length}',
                   style: ThemeStyle.caption.copyWith(color: Colors.black),
                   overflow: TextOverflow.fade)
             ],
@@ -100,7 +101,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: const [
-              Text('Previous Activity:-',
+              Text('Previous Activity:',
                   style: ThemeStyle.caption, overflow: TextOverflow.fade),
               Text('Surprise your significant other with something considerate',
                   textAlign: TextAlign.right,

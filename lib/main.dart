@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:activity_finder/constant/value.constant.dart';
+import 'package:activity_finder/core/database/object_box.dart';
 import 'package:activity_finder/core/navigation/navigation.constant.dart';
 import 'package:activity_finder/core/navigation/navigation.service.dart';
 import 'package:activity_finder/ui/home/home.view.dart';
@@ -11,6 +12,7 @@ void main() {
   runZonedGuarded(
     () {
       WidgetsFlutterBinding.ensureInitialized();
+      ObjectBox.init();
       runApp(ProviderScope(child: const MyApp()));
     },
     (e, s) {

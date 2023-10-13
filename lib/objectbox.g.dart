@@ -4,7 +4,7 @@
 // With a Dart package, run `dart run build_runner build`.
 // See also https://docs.objectbox.io/getting-started#generate-objectbox-code
 
-// ignore_for_file: camel_case_types, depend_on_referenced_packages
+// ignore_for_file: camel_case_types, depend_on_referenced_packages, avoid_classes_with_only_static_members
 // coverage:ignore-file
 
 import 'dart:typed_data';
@@ -15,6 +15,7 @@ import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'core/model/activity.model.dart';
+import 'core/model/activity_box.model.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -22,36 +23,70 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(1, 643494472515906494),
       name: 'Activity',
-      lastPropertyId: const IdUid(5, 3438084175449556020),
+      lastPropertyId: const IdUid(8, 1808279480011168572),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
             id: const IdUid(1, 5295320527638957919),
             name: 'key',
             type: 6,
-            flags: 1),
+            flags: 0),
         ModelProperty(
             id: const IdUid(2, 2894117047612951492),
             name: 'activity',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 1250022524904483695),
-            name: 'participant',
-            type: 6,
-            flags: 0),
-        ModelProperty(
             id: const IdUid(4, 3830596806597853795),
             name: 'price',
-            type: 6,
+            type: 8,
             flags: 0),
         ModelProperty(
             id: const IdUid(5, 3438084175449556020),
             name: 'accessibility',
             type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 2130107540460132645),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(7, 4782060784523924754),
+            name: 'participants',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 1808279480011168572),
+            name: 'type',
+            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(2, 5093746665466482176),
+      name: 'ActivityBox',
+      lastPropertyId: const IdUid(3, 8775914955070426984),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 2818084871594497052),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(3, 8775914955070426984),
+            name: 'lastFilterType',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(1, 2187203751022069206),
+            name: 'activities',
+            targetId: const IdUid(1, 643494472515906494))
+      ],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -82,13 +117,13 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(1, 643494472515906494),
-      lastIndexId: const IdUid(0, 0),
-      lastRelationId: const IdUid(0, 0),
+      lastEntityId: const IdUid(2, 5093746665466482176),
+      lastIndexId: const IdUid(1, 8056857317620474529),
+      lastRelationId: const IdUid(1, 2187203751022069206),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
-      retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredIndexUids: const [8056857317620474529],
+      retiredPropertyUids: const [1250022524904483695, 7316424249387384675],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -99,22 +134,26 @@ ModelDefinition getObjectBoxModel() {
         model: _entities[0],
         toOneRelations: (Activity object) => [],
         toManyRelations: (Activity object) => {},
-        getId: (Activity object) => object.key,
+        getId: (Activity object) => object.id,
         setId: (Activity object, int id) {
-          object.key = id;
+          object.id = id;
         },
         objectToFB: (Activity object, fb.Builder fbb) {
           final activityOffset = object.activity == null
               ? null
               : fbb.writeString(object.activity!);
-          fbb.startTable(6);
-          fbb.addInt64(0, object.key ?? 0);
+          final typeOffset =
+              object.type == null ? null : fbb.writeString(object.type!);
+          fbb.startTable(9);
+          fbb.addInt64(0, object.key);
           fbb.addOffset(1, activityOffset);
-          fbb.addInt64(2, object.participant);
-          fbb.addInt64(3, object.price);
+          fbb.addFloat64(3, object.price);
           fbb.addFloat64(4, object.accessibility);
+          fbb.addInt64(5, object.id);
+          fbb.addInt64(6, object.participants);
+          fbb.addOffset(7, typeOffset);
           fbb.finish(fbb.endTable());
-          return object.key ?? 0;
+          return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
@@ -123,19 +162,52 @@ ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 4);
           final activityParam = const fb.StringReader(asciiOptimization: true)
               .vTableGetNullable(buffer, rootOffset, 6);
-          final participantParam =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
-          final priceParam =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10);
+          final typeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 18);
+          final participantsParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 16);
+          final priceParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 10);
           final accessibilityParam = const fb.Float64Reader()
               .vTableGetNullable(buffer, rootOffset, 12);
           final object = Activity(
               key: keyParam,
               activity: activityParam,
-              participant: participantParam,
+              type: typeParam,
+              participants: participantsParam,
               price: priceParam,
-              accessibility: accessibilityParam);
+              accessibility: accessibilityParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
 
+          return object;
+        }),
+    ActivityBox: EntityDefinition<ActivityBox>(
+        model: _entities[1],
+        toOneRelations: (ActivityBox object) => [],
+        toManyRelations: (ActivityBox object) =>
+            {RelInfo<ActivityBox>.toMany(1, object.id): object.activities},
+        getId: (ActivityBox object) => object.id,
+        setId: (ActivityBox object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ActivityBox object, fb.Builder fbb) {
+          final lastFilterTypeOffset = fbb.writeString(object.lastFilterType);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(2, lastFilterTypeOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = ActivityBox()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..lastFilterType = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 8, '');
+          InternalToManyAccess.setRelInfo<ActivityBox>(object.activities, store,
+              RelInfo<ActivityBox>.toMany(1, object.id));
           return object;
         })
   };
@@ -143,7 +215,6 @@ ModelDefinition getObjectBoxModel() {
   return ModelDefinition(model, bindings);
 }
 
-// ignore: avoid_classes_with_only_static_members
 /// [Activity] entity fields to define ObjectBox queries.
 class Activity_ {
   /// see [Activity.key]
@@ -153,15 +224,36 @@ class Activity_ {
   static final activity =
       QueryStringProperty<Activity>(_entities[0].properties[1]);
 
-  /// see [Activity.participant]
-  static final participant =
-      QueryIntegerProperty<Activity>(_entities[0].properties[2]);
-
   /// see [Activity.price]
   static final price =
-      QueryIntegerProperty<Activity>(_entities[0].properties[3]);
+      QueryDoubleProperty<Activity>(_entities[0].properties[2]);
 
   /// see [Activity.accessibility]
   static final accessibility =
-      QueryDoubleProperty<Activity>(_entities[0].properties[4]);
+      QueryDoubleProperty<Activity>(_entities[0].properties[3]);
+
+  /// see [Activity.id]
+  static final id = QueryIntegerProperty<Activity>(_entities[0].properties[4]);
+
+  /// see [Activity.participants]
+  static final participants =
+      QueryIntegerProperty<Activity>(_entities[0].properties[5]);
+
+  /// see [Activity.type]
+  static final type = QueryStringProperty<Activity>(_entities[0].properties[6]);
+}
+
+/// [ActivityBox] entity fields to define ObjectBox queries.
+class ActivityBox_ {
+  /// see [ActivityBox.id]
+  static final id =
+      QueryIntegerProperty<ActivityBox>(_entities[1].properties[0]);
+
+  /// see [ActivityBox.lastFilterType]
+  static final lastFilterType =
+      QueryStringProperty<ActivityBox>(_entities[1].properties[1]);
+
+  /// see [ActivityBox.activities]
+  static final activities =
+      QueryRelationToMany<ActivityBox, Activity>(_entities[1].relations[0]);
 }
