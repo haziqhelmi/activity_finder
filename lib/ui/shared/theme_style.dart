@@ -13,6 +13,8 @@ class ThemeStyle {
       TextStyle(fontSize: 17, fontWeight: FontWeight.w300);
   static const TextStyle subHeading500 =
       TextStyle(fontSize: 17, fontWeight: FontWeight.w500);
+  static const TextStyle subHeadingBold =
+      TextStyle(fontSize: 17, fontWeight: FontWeight.bold);
   static const TextStyle body1 =
       TextStyle(fontSize: 15, fontWeight: FontWeight.bold);
   static const TextStyle body2 =

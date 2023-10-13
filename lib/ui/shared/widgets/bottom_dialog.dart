@@ -1,3 +1,4 @@
+import 'package:activity_finder/ui/shared/theme_style.dart';
 import 'package:flutter/material.dart';
 
 class _BottomDialog extends StatelessWidget {
@@ -41,7 +42,7 @@ class _BottomDialog extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Color(0xFF1C1C20),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -67,8 +68,7 @@ class _BottomDialog extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 16),
         child: Text(
           title ?? '',
-          style: TextStyle(
-              fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black),
+          style: ThemeStyle.subHeadingBold,
           textAlign: TextAlign.center,
         ),
       ),
@@ -84,8 +84,7 @@ class _BottomDialog extends StatelessWidget {
           width: double.infinity,
           child: Text(
             subtitle ?? '',
-            style: TextStyle(
-                fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black),
+            style: ThemeStyle.body2,
           ),
         ),
       ),
@@ -96,7 +95,7 @@ class _BottomDialog extends StatelessWidget {
     return MaterialButton(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
-          Radius.circular(4),
+          Radius.circular(12),
         ),
       ),
       highlightElevation: 0,
@@ -111,8 +110,7 @@ class _BottomDialog extends StatelessWidget {
       child: Text(
         primaryActionText,
         textAlign: TextAlign.center,
-        style: TextStyle(
-            fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),
+        style: ThemeStyle.button.copyWith(color: Colors.black),
       ),
     );
   }
