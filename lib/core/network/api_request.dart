@@ -19,9 +19,8 @@ class ApiRequest {
     String endpoint, {
     Map<String, dynamic>? param,
   }) async {
-    final Response result = await _dio
-        .getUri(Uri.https(_baseUrl, endpoint, param))
-        .timeout(const Duration(milliseconds: 30));
+    final Response result =
+        await _dio.getUri(Uri.https(_baseUrl, endpoint, param));
 
     return result.data;
   }

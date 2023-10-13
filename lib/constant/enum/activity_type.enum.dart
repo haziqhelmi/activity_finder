@@ -1,4 +1,7 @@
+import 'package:activity_finder/constant/extension/string.extension.dart';
+
 enum ActivityType {
+  none,
   education,
   recreational,
   social,
@@ -7,5 +10,10 @@ enum ActivityType {
   cooking,
   relaxation,
   music,
-  busywork,
+  busywork;
+
+  String get getName => switch (this) {
+        diy => name.toUpperCase(),
+        _ => name.titleCase(),
+      };
 }

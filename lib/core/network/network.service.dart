@@ -4,8 +4,7 @@ import 'package:activity_finder/core/model/activity.model.dart';
 import 'package:activity_finder/core/network/api_request.dart';
 import 'package:riverpod/riverpod.dart';
 
-final Provider<NetworkService> networkRepository =
-    Provider<NetworkService>((_) {
+final Provider<NetworkService> networkService = Provider<NetworkService>((_) {
   return NetworkService();
 });
 

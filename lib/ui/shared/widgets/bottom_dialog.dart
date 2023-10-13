@@ -124,9 +124,7 @@ class _BottomDialog extends StatelessWidget {
       child: MaterialButton(
         shape: RoundedRectangleBorder(
           side: BorderSide(color: Colors.black),
-          borderRadius: BorderRadius.all(
-            Radius.circular(4),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(4)),
         ),
         highlightElevation: 0,
         focusElevation: 0,

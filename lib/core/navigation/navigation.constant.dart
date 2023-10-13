@@ -1,3 +1,4 @@
+import 'package:activity_finder/ui/home/home.view.dart';
 import 'package:flutter/material.dart';
 
 class NavConstant {
@@ -16,6 +17,8 @@ class NavConstant {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case homeRoute:
+        return _pageRoute(HomeView());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
