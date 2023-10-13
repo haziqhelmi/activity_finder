@@ -35,7 +35,7 @@ class HomeController extends BaseController {
       // fetch last activity -> set currActivity
       // else show empty '-'
       dropdownController.text = ActivityType.none.getName;
-      currActivity = await _networkService.getActivity();
+      // currActivity = await _networkService.getActivity();
       print(currActivity.toString());
       setIdle();
     } catch (e, s) {
@@ -46,16 +46,19 @@ class HomeController extends BaseController {
   Future<void> onSearchPressed() async {
     setLoading();
     try {
+      final ActivityType selectedType =
+          ActivityType.values.byName(dropdownController.text.toLowerCase());
       currActivity = await _networkService.getActivity();
-      // if (currActivity?.type == ActivityType.diy) {
-      //   setIdle();
-      // } else {
-      //   // PART 3: call the api again if condition is not satisfied
-      //   // the better way is to pass in a parameter `type` into the api call
-      //   await onNextPressed();
-      // }
-      print(currActivity.toString());
-      setIdle();
+
+      if (selectedType == ActivityType.none) {
+        setIdle();
+      } else if (selectedType == currActivity?.type) {
+        setIdle();
+      } else {
+        // PART 3: call the api again if condition is not satisfied
+        // the better way is to pass in a parameter `type` into the api call
+        await onSearchPressed();
+      }
     } catch (e, s) {
       setError(e, s);
     }
