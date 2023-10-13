@@ -43,7 +43,7 @@ class HomeController extends BaseController {
     }
   }
 
-  Future<void> onNextPressed() async {
+  Future<void> onSearchPressed() async {
     setLoading();
     try {
       currActivity = await _networkService.getActivity();

@@ -162,10 +162,11 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   Widget _buildBottomNav(ViewState state) {
     return Button(
-      buttonText: 'Next',
+      buttonText: 'Search',
+      icon: Icons.search_rounded,
       onPressed: state == ViewState.loading
           ? null
-          : () => ref.read(homeController.notifier).onNextPressed(),
+          : () => ref.read(homeController.notifier).onSearchPressed(),
     ).paddingOnly(left: 24, right: 24, bottom: 24).safeArea();
   }
 }
