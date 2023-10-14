@@ -12,26 +12,42 @@ class ObjectBoxService {
   final ObjectBox? _database = database;
 
   /// load
-  ActivityBox? loadActivityBox() {
+  Future<ActivityBox?> loadActivityBox() async {
     if (_database != null) {
-      return _database!.activityBox.get(1);
+      // the first object we put on ObjectBox.init() will always have id: 1,
+      // and we only want to update that first object
+      final dbData = await database!.activityBox.getAsync(1);
+
+      return dbData;
     }
     return null;
   }
 
-  List<Activity> loadAllActivities() {
-    final ActivityBox? dbData = loadActivityBox();
+  Future<List<Activity>> loadAllActivities() async {
+    final ActivityBox? dbData = await loadActivityBox();
 
     if (dbData != null) {
-      return dbData.activities;
+      final result = dbData.activities;
+
+      return result;
     }
     return [];
   }
 
-  String? loadFilter() {
-    final ActivityBox? dbData = loadActivityBox();
+  Future<Activity?> loadLastActivity() async {
+    final ActivityBox? dbData = await loadActivityBox();
 
     if (dbData != null) {
+      return dbData.activities.first;
+    }
+    return null;
+  }
+
+  Future<String?> loadFilter() async {
+    final ActivityBox? dbData = await loadActivityBox();
+
+    if (dbData != null) {
+      print(dbData);
       return dbData.lastFilterType;
     }
     return null;
@@ -40,8 +56,8 @@ class ObjectBoxService {
   /// remove
 
   /// save
-  void saveActivity(Activity activity) {
-    final ActivityBox? dbData = loadActivityBox();
+  Future<void> saveActivity(Activity activity) async {
+    final ActivityBox? dbData = await loadActivityBox();
 
     if (dbData != null) {
       dbData.activities.add(activity);
@@ -55,13 +71,12 @@ class ObjectBoxService {
     }
   }
 
-  void saveFilter(String name) {
-    final ActivityBox? dbData = loadActivityBox();
+  Future<void> saveFilter(String name) async {
+    final ActivityBox? dbData = await loadActivityBox();
 
     if (dbData != null) {
       dbData.lastFilterType = name;
       saveActivityBox(dbData);
-      print(loadActivityBox());
     }
   }
 }

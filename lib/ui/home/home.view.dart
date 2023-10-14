@@ -42,7 +42,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
         _buildTitle(),
         _buildSubtitle(),
         _buildStats(),
-        Divider().paddingOnly(bottom: 16),
+        _buildDivider(),
         _buildListView(state),
       ],
     ).paddingAll(24);
@@ -60,6 +60,11 @@ class _HomeViewState extends ConsumerState<HomeView> {
   }
 
   Widget _buildStats() {
+    final List<Activity> activities =
+        ref.read(homeController.notifier).activities;
+    final Activity? prevActivity =
+        ref.read(homeController.notifier).prevActivity;
+
     return Row(
       children: [
         Container(
@@ -80,8 +85,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
               Text('History',
                   style: ThemeStyle.body1.copyWith(color: Colors.black),
                   overflow: TextOverflow.fade),
-              Text(
-                  'Total: ${ref.read(homeController.notifier).activities.length}',
+              Text('Total: ${activities.length}',
                   style: ThemeStyle.caption.copyWith(color: Colors.black),
                   overflow: TextOverflow.fade)
             ],
@@ -100,10 +104,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: const [
+            children: [
               Text('Previous Activity:',
                   style: ThemeStyle.caption, overflow: TextOverflow.fade),
-              Text('Surprise your significant other with something considerate',
+              Text('${prevActivity?.activity ?? '-'}',
                   textAlign: TextAlign.right,
                   style: ThemeStyle.body1,
                   overflow: TextOverflow.fade),
@@ -112,6 +116,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
         ).expanded(flex: 2),
       ],
     ).paddingOnly(bottom: 16);
+  }
+
+  Widget _buildDivider() {
+    return Divider().paddingOnly(bottom: 16);
   }
 
   Widget _buildListView(ViewState state) {

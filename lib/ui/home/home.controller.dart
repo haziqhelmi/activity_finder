@@ -31,13 +31,12 @@ class HomeController extends BaseController {
   final TextEditingController dropdownController = TextEditingController();
   List<Activity> activities = [];
   Activity? currActivity;
+  Activity? prevActivity;
 
   Future<void> init() async {
     try {
       // fetch last filter -> set text to controller
-      // fetch last activity -> set currActivity
-      // else show empty '-'
-      final String? savedFilter = _objectBoxService.loadFilter();
+      final String? savedFilter = await _objectBoxService.loadFilter();
       if (savedFilter != null && savedFilter.isNotEmpty) {
         dropdownController.text =
             ActivityType.values.byName(savedFilter).getName;
@@ -45,10 +44,15 @@ class HomeController extends BaseController {
         dropdownController.text = ActivityType.none.getName;
       }
 
-      activities = _objectBoxService.loadAllActivities();
+      // fetch last activity -> set currActivity
+      activities = await _objectBoxService.loadAllActivities();
+      if (activities.isNotEmpty) {
+        currActivity = activities.last;
+        if (activities.length >= 2) {
+          prevActivity = activities.elementAt(activities.length - 2);
+        }
+      }
 
-      // currActivity = await _networkService.getActivity();
-      print(currActivity.toString());
       setIdle();
     } catch (e, s) {
       setError(e, s);
@@ -71,9 +75,15 @@ class HomeController extends BaseController {
         // the better way is to pass in a parameter `type` into the api call
         await onSearchPressed();
       } else {
-        if (currActivity != null) _objectBoxService.saveActivity(currActivity!);
-        activities = _objectBoxService.loadAllActivities();
+        if (currActivity != null) {
+          await _objectBoxService.saveActivity(currActivity!);
+        }
+        activities = await _objectBoxService.loadAllActivities();
         setIdle();
+      }
+
+      if (activities.length >= 2) {
+        prevActivity = activities.elementAt(activities.length - 2);
       }
     } catch (e, s) {
       setError(e, s);
