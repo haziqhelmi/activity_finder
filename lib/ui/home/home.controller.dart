@@ -1,7 +1,9 @@
 import 'package:activity_finder/constant/enum/activity_type.enum.dart';
 import 'package:activity_finder/constant/enum/view_state.enum.dart';
+import 'package:activity_finder/core/argument/argument.dart';
 import 'package:activity_finder/core/database/object_box.service.dart';
 import 'package:activity_finder/core/model/activity.model.dart';
+import 'package:activity_finder/core/navigation/navigation.constant.dart';
 import 'package:activity_finder/core/navigation/navigation.service.dart';
 import 'package:activity_finder/core/network/network.service.dart';
 import 'package:activity_finder/ui/shared/base.controller.dart';
@@ -57,6 +59,19 @@ class HomeController extends BaseController {
     } catch (e, s) {
       setError(e, s);
     }
+  }
+
+  void navigateToHistory() {
+    final HistoryArgument argument = HistoryArgument(
+      activities: activities,
+      filterType: ActivityType.values.byName(
+        dropdownController.text.toLowerCase(),
+      ),
+    );
+    _navigationService.navigateTo(
+      NavConstant.historyRoute,
+      arguments: argument,
+    );
   }
 
   Future<void> onSearchPressed() async {

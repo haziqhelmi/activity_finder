@@ -30,7 +30,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     final ViewState state = ref.watch(homeController);
 
     return Scaffold(
-      body: _buildBody(state).safeArea(),
+      body: _buildBody(state),
       bottomNavigationBar: _buildBottomNav(state),
     );
   }
@@ -45,7 +45,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
         _buildDivider(),
         _buildListView(state),
       ],
-    ).paddingAll(24);
+    ).paddingAll(24).safeArea();
   }
 
   Text _buildTitle() {
@@ -67,30 +67,43 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
     return Row(
       children: [
-        Container(
-          height: 100,
-          decoration: BoxDecoration(
-            color: Color(0xFFF1C502),
+        MaterialButton(
+          color: Color(0xFFF1C502),
+          splashColor: Colors.blue,
+          padding: EdgeInsets.all(0),
+          onPressed: () =>
+              ref.read(homeController.notifier).navigateToHistory(),
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12),
+              topRight: Radius.circular(12),
+              bottomLeft: Radius.circular(12),
+            ),
+          ),
+          child: Container(
+            height: 100,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
-                bottomLeft: Radius.circular(12)),
+                bottomLeft: Radius.circular(12),
+              ),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('History',
+                    style: ThemeStyle.body1.copyWith(color: Colors.black),
+                    overflow: TextOverflow.fade),
+                Text('Total: ${activities.length}',
+                    style: ThemeStyle.caption.copyWith(color: Colors.black),
+                    overflow: TextOverflow.fade)
+              ],
+            ),
           ),
-          margin: EdgeInsets.only(right: 12),
-          padding: EdgeInsets.symmetric(horizontal: 12),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('History',
-                  style: ThemeStyle.body1.copyWith(color: Colors.black),
-                  overflow: TextOverflow.fade),
-              Text('Total: ${activities.length}',
-                  style: ThemeStyle.caption.copyWith(color: Colors.black),
-                  overflow: TextOverflow.fade)
-            ],
-          ),
-        ).expanded(flex: 1),
+        ).paddingOnly(right: 12).expanded(flex: 1),
         Container(
           height: 100,
           padding: EdgeInsets.symmetric(horizontal: 12),

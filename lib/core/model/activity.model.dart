@@ -1,3 +1,4 @@
+import 'package:activity_finder/constant/enum/activity_type.enum.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -19,6 +20,9 @@ class Activity {
     this.price,
     this.accessibility,
   });
+
+  ActivityType get getType =>
+      type != null ? ActivityType.values.byName(type!) : ActivityType.none;
 
   Activity.fromJson(Map<String, dynamic> json) {
     key = json.containsKey('key') ? int.tryParse(json['key']) : null;

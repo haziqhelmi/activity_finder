@@ -1,3 +1,5 @@
+import 'package:activity_finder/core/argument/argument.dart';
+import 'package:activity_finder/ui/history/history.view.dart';
 import 'package:activity_finder/ui/home/home.view.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +21,10 @@ class NavConstant {
     switch (settings.name) {
       case homeRoute:
         return _pageRoute(HomeView());
+      case historyRoute:
+        return _pageRoute(HistoryView(
+          argument: settings.arguments as HistoryArgument,
+        ));
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
