@@ -1,7 +1,8 @@
 import 'package:activity_finder/constant/enum/activity_type.enum.dart';
 import 'package:activity_finder/constant/extension/widget.extension.dart';
 import 'package:activity_finder/core/model/activity.model.dart';
-import 'package:activity_finder/ui/shared/theme_style.dart';
+import 'package:activity_finder/ui/shared/style/theme_color.dart';
+import 'package:activity_finder/ui/shared/style/theme_style.dart';
 import 'package:flutter/material.dart';
 
 class ActivityCard extends StatelessWidget {
@@ -22,7 +23,7 @@ class ActivityCard extends StatelessWidget {
       width: double.infinity,
       constraints: BoxConstraints(minHeight: 250),
       decoration: BoxDecoration(
-        color: Color.fromARGB(12, 255, 255, 255),
+        color: ThemeColor.primaryGray,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -72,7 +73,7 @@ class ActivityCard extends StatelessWidget {
             value: activity?.accessibility,
             minHeight: 6,
             borderRadius: BorderRadius.circular(3),
-            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFF1C502)),
+            valueColor: AlwaysStoppedAnimation<Color>(ThemeColor.primaryYellow),
           ),
         ],
       ),

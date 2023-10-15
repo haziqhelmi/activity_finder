@@ -1,4 +1,5 @@
-import 'package:activity_finder/ui/shared/theme_style.dart';
+import 'package:activity_finder/ui/shared/style/theme_color.dart';
+import 'package:activity_finder/ui/shared/style/theme_style.dart';
 import 'package:flutter/material.dart';
 
 class _BottomDialog extends StatelessWidget {
@@ -102,7 +103,7 @@ class _BottomDialog extends StatelessWidget {
       focusElevation: 0,
       disabledElevation: 0,
       hoverElevation: 0,
-      color: Color(0xFFF1C502),
+      color: ThemeColor.primaryYellow,
       height: 40,
       elevation: 0,
       minWidth: MediaQuery.of(context).size.width,
@@ -110,7 +111,7 @@ class _BottomDialog extends StatelessWidget {
       child: Text(
         primaryActionText,
         textAlign: TextAlign.center,
-        style: ThemeStyle.button.copyWith(color: Colors.black),
+        style: ThemeStyle.button.copyWith(color: ThemeColor.black),
       ),
     );
   }
@@ -121,14 +122,14 @@ class _BottomDialog extends StatelessWidget {
       replacement: SizedBox.shrink(),
       child: MaterialButton(
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Colors.black),
+          side: BorderSide(color: ThemeColor.black),
           borderRadius: BorderRadius.all(Radius.circular(4)),
         ),
         highlightElevation: 0,
         focusElevation: 0,
         disabledElevation: 0,
         hoverElevation: 0,
-        color: Colors.white,
+        color: ThemeColor.white,
         height: 40,
         elevation: 0,
         minWidth: MediaQuery.of(context).size.width,
@@ -137,7 +138,9 @@ class _BottomDialog extends StatelessWidget {
           secondaryActionText ?? '',
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: ThemeColor.black),
         ),
       ),
     );

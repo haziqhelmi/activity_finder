@@ -1,6 +1,7 @@
 import 'package:activity_finder/constant/extension/widget.extension.dart';
 import 'package:activity_finder/core/model/sheet_item.dart';
-import 'package:activity_finder/ui/shared/theme_style.dart';
+import 'package:activity_finder/ui/shared/style/theme_color.dart';
+import 'package:activity_finder/ui/shared/style/theme_style.dart';
 import 'package:flutter/material.dart';
 
 class DropDown extends StatelessWidget {
@@ -26,7 +27,7 @@ class DropDown extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: ThemeStyle.body1.copyWith(color: Colors.white))
+        Text(title, style: ThemeStyle.body1.copyWith(color: ThemeColor.white))
             .paddingOnly(bottom: 8),
         MaterialButton(
           shape: RoundedRectangleBorder(
@@ -70,7 +71,7 @@ class DropDown extends StatelessWidget {
                 child: Text(
                   controller.text,
                   textAlign: TextAlign.left,
-                  style: ThemeStyle.button.copyWith(color: Colors.white),
+                  style: ThemeStyle.button.copyWith(color: ThemeColor.white),
                 ).paddingOnly(left: 8),
               ),
               Icon(

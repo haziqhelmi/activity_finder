@@ -4,7 +4,8 @@ import 'package:activity_finder/constant/extension/widget.extension.dart';
 import 'package:activity_finder/core/model/activity.model.dart';
 import 'package:activity_finder/core/model/sheet_item.dart';
 import 'package:activity_finder/ui/home/home.controller.dart';
-import 'package:activity_finder/ui/shared/theme_style.dart';
+import 'package:activity_finder/ui/shared/style/theme_color.dart';
+import 'package:activity_finder/ui/shared/style/theme_style.dart';
 import 'package:activity_finder/ui/shared/widgets/activity_card.dart';
 import 'package:activity_finder/ui/shared/widgets/button.dart';
 import 'package:activity_finder/ui/shared/widgets/drop_down.dart';
@@ -68,8 +69,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
     return Row(
       children: [
         MaterialButton(
-          color: Color(0xFFF1C502),
-          splashColor: Colors.blue,
+          color: ThemeColor.primaryYellow,
+          splashColor: ThemeColor.primaryBlue,
           padding: EdgeInsets.all(0),
           onPressed: () =>
               ref.read(homeController.notifier).navigateToHistory(),
@@ -95,10 +96,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('History',
-                    style: ThemeStyle.body1.copyWith(color: Colors.black),
+                    style: ThemeStyle.body1.copyWith(color: ThemeColor.black),
                     overflow: TextOverflow.fade),
                 Text('Total: ${activities.length}',
-                    style: ThemeStyle.caption.copyWith(color: Colors.black),
+                    style: ThemeStyle.caption.copyWith(color: ThemeColor.black),
                     overflow: TextOverflow.fade)
               ],
             ),
@@ -108,7 +109,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
           height: 100,
           padding: EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(
-            color: Color.fromARGB(12, 255, 255, 255),
+            color: ThemeColor.primaryGray,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
@@ -170,11 +171,11 @@ class _HomeViewState extends ConsumerState<HomeView> {
         width: double.infinity,
         height: 250,
         decoration: BoxDecoration(
-          color: Color.fromARGB(12, 255, 255, 255),
+          color: ThemeColor.primaryGray,
           borderRadius: BorderRadius.circular(16),
         ),
         child: CircularProgressIndicator(
-          color: Color(0xFFF1C502),
+          color: ThemeColor.primaryYellow,
         ).sizedBox(width: 32, height: 32).center(),
       );
     } else {

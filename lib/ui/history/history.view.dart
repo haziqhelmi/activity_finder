@@ -4,7 +4,8 @@ import 'package:activity_finder/core/argument/argument.dart';
 import 'package:activity_finder/core/model/activity.model.dart';
 import 'package:activity_finder/core/navigation/navigation.service.dart';
 import 'package:activity_finder/ui/history/history.controller.dart';
-import 'package:activity_finder/ui/shared/theme_style.dart';
+import 'package:activity_finder/ui/shared/style/theme_color.dart';
+import 'package:activity_finder/ui/shared/style/theme_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,7 +31,7 @@ class HistoryView extends ConsumerWidget {
     return AppBar(
       elevation: 0,
       scrolledUnderElevation: 0,
-      backgroundColor: Color.fromARGB(255, 47, 47, 47),
+      backgroundColor: ThemeColor.secondaryGray,
       leading: IconButton(
         icon: Icon(Icons.west_rounded),
         iconSize: 24,
@@ -51,7 +52,6 @@ class HistoryView extends ConsumerWidget {
 
         return ListTile(
           minVerticalPadding: 16,
-          // contentPadding: EdgeInsets.all(0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24),
@@ -62,8 +62,8 @@ class HistoryView extends ConsumerWidget {
           ),
           isThreeLine: false,
           tileColor: currActivity.getType == argument.filterType
-              ? Colors.yellow.withOpacity(0.25)
-              : Color.fromARGB(12, 255, 255, 255),
+              ? ThemeColor.primaryYellow.withOpacity(0.25)
+              : ThemeColor.primaryGray,
           title: Text(
             currActivity.activity ?? '-',
             style: ThemeStyle.subHeadingBold,

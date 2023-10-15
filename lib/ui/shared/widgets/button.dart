@@ -1,5 +1,6 @@
 import 'package:activity_finder/constant/extension/widget.extension.dart';
-import 'package:activity_finder/ui/shared/theme_style.dart';
+import 'package:activity_finder/ui/shared/style/theme_color.dart';
+import 'package:activity_finder/ui/shared/style/theme_style.dart';
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
@@ -24,8 +25,8 @@ class Button extends StatelessWidget {
       focusElevation: 0,
       disabledElevation: 0,
       hoverElevation: 0,
-      color: Color(0xFFF1C502),
-      disabledColor: Color.fromARGB(12, 255, 255, 255),
+      color: ThemeColor.primaryYellow,
+      disabledColor: ThemeColor.primaryGray,
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       height: 48,
@@ -39,13 +40,17 @@ class Button extends StatelessWidget {
             Icon(
               icon,
               size: 24,
-              color: onPressed != null ? Colors.black : Color(0xFFF1C502),
+              color: onPressed != null
+                  ? ThemeColor.black
+                  : ThemeColor.primaryYellow,
             ).paddingOnly(right: 8),
           Text(
             buttonText,
             textAlign: TextAlign.center,
             style: ThemeStyle.button.copyWith(
-              color: onPressed != null ? Colors.black : Color(0xFFF1C502),
+              color: onPressed != null
+                  ? ThemeColor.black
+                  : ThemeColor.primaryYellow,
             ),
           ),
         ],
